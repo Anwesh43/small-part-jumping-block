@@ -200,3 +200,24 @@ class SmallPartJumpingBlock {
         this.curr.startUpdating(cb)
     }
 }
+
+class Renderer {
+
+    sjb : SmallPartJumpingBlock = new SmallPartJumpingBlock()
+    animator : Animator = new Animator()
+
+    render(context : CanvasRenderingContext2D) {
+        this.sjb.draw(context)
+    }
+
+    handleTap(cb : Function) {
+        this.sjb.startUpdating(() => {
+            this.animator.start(() => {
+                this.sjb.update(() => {
+                    this.animator.stop()
+                    cb()
+                })
+            })
+        })
+    }
+}
