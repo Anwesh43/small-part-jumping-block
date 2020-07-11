@@ -37,6 +37,7 @@ class DrawingUtil {
         const gap : number = size / (parts)
         const sf : number = ScaleUtil.sinify(scale)
         const sci : number = ScaleUtil.divideScale(sf, i, parts)
+        console.log(sf)
         const y : number = -(h - gap) * sci
         context.save()
         context.translate(gap * i, 0)
@@ -44,6 +45,7 @@ class DrawingUtil {
         context.save()
         context.translate(0, y)
         context.fillRect(0, -gap, gap, gap)
+        context.strokeRect(0, -gap, gap, gap)
         context.restore()
         context.restore()
     }
@@ -223,6 +225,7 @@ class Renderer {
     handleTap(cb : Function) {
         this.sjb.startUpdating(() => {
             this.animator.start(() => {
+                cb()
                 this.sjb.update(() => {
                     this.animator.stop()
                     cb()
