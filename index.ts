@@ -7,6 +7,7 @@ const foreColor : string = "indigo"
 const backColor : string = "#BDBDBD"
 const delay : number = 20
 const nodes : number = 5
+const strokeFactor : number = 90
 
 class ScaleUtil {
 
@@ -20,6 +21,39 @@ class ScaleUtil {
 
     static sinify(scale : number) {
         return Math.sin(scale * Math.PI)
+    }
+}
+
+class DrawingUtil {
+
+    static drawLine(context : CanvasRenderingContext2D, x1 : number, y1 : number, x2 : number, y2 : number) {
+        context.beginPath()
+        context.moveTo(x1, y1)
+        context.lineTo(x2, y2)
+        context.stroke()
+    }
+
+    static drawJumpingBlock(context : CanvasRenderingContext2D, i : number, scale : number, size : number) {
+        const gap : number = size/ (parts)
+        const sf : number = ScaleUtil.sinify(scale)
+        const sci : number = ScaleUtil.divideScale(sf, i, parts)
+        const y : number = -(h - gap) * sci
+        context.save()
+        context.translate(gap * (i + 1), 0)
+        DrawingUtil.drawLine(context, gap / 2, 0, gap / 2, y)
+        context.fillRect(0, -gap, gap, gap)
+        context.restore()
+    }
+
+    static drawJBNode(context : CanvasRenderingContext2D, i : number, scale : number) {
+        const size : number = w / nodes
+        context.strokeStyle = foreColor
+        context.lineCap = 'round'
+        context.lineWidth = Math.min(w, h) / strokeFactor
+        context.save()
+        context.translate(size * i, h)
+        DrawingUtil.drawJumpingBlock(context, i, scale, size)
+        context.restore()
     }
 }
 
