@@ -34,14 +34,17 @@ class DrawingUtil {
     }
 
     static drawJumpingBlock(context : CanvasRenderingContext2D, i : number, scale : number, size : number) {
-        const gap : number = size/ (parts)
+        const gap : number = size / (parts)
         const sf : number = ScaleUtil.sinify(scale)
         const sci : number = ScaleUtil.divideScale(sf, i, parts)
         const y : number = -(h - gap) * sci
         context.save()
-        context.translate(gap * (i + 1), 0)
+        context.translate(gap * i, 0)
         DrawingUtil.drawLine(context, gap / 2, 0, gap / 2, y)
+        context.save()
+        context.translate(0, y)
         context.fillRect(0, -gap, gap, gap)
+        context.restore()
         context.restore()
     }
 
