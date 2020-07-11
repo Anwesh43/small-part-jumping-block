@@ -48,11 +48,14 @@ class DrawingUtil {
     static drawJBNode(context : CanvasRenderingContext2D, i : number, scale : number) {
         const size : number = w / nodes
         context.strokeStyle = foreColor
+        context.fillStyle = foreColor
         context.lineCap = 'round'
         context.lineWidth = Math.min(w, h) / strokeFactor
         context.save()
         context.translate(size * i, h)
-        DrawingUtil.drawJumpingBlock(context, i, scale, size)
+        for (var j = 0; j < parts; j++) {
+            DrawingUtil.drawJumpingBlock(context, j, scale, size)
+        }
         context.restore()
     }
 }
